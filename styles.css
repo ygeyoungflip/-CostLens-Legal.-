@@ -500,6 +500,18 @@ body {
   font-size: 14px;
 }
 
+.footer__legal {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+
+.footer__copyright {
+  font-size: 12px;
+  color: #64748b;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
   .hero__title { font-size: 36px; }
@@ -521,4 +533,6 @@ body {
   .btn--lg { text-align: center; }
   .roi-card__value { font-size: 32px; }
   .footer__inner { flex-direction: column; gap: 12px; text-align: center; }
+  .footer__legal { margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .footer__copyright { font-size: 12px; color: #64748b; text-align: center; }
 }

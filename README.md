@@ -2,6 +2,8 @@
 
 Lead capture landing page for CostLens Legal's AI cost reduction tool.
 
+**Proprietary Notice:** © 2026 CostLens Legal. All rights reserved. This code is proprietary and confidential. No license is granted.
+
 ## Deploy via GitHub Pages
 
 1. Create a GitHub repo
