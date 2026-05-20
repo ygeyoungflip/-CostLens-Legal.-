@@ -5,9 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const successMsg = document.getElementById('successMessage');
 
   // Google Apps Script Web App URL
-  // To set up: Deploy a Google Apps Script that writes to a Sheet
-  // Instructions at: https://github.com/yourusername/costlens-landing
-  const GOOGLE_SHEET_URL = ''; // ← PASTE YOUR GOOGLE APPS SCRIPT URL HERE
+  // SETUP: 1. Go to sheets.new → name it "CostLens Leads"
+  //        2. Extensions → Apps Script → paste google-apps-script.gs code → Save
+  //        3. Deploy → New Deployment → Web App → "Anyone" → Deploy
+  //        4. Copy the Web App URL and paste it below
+  const GOOGLE_SHEET_URL = ''; // ← PASTE YOUR WEB APP URL HERE
 
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
