@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CostLens Legal — Onboarding Wizard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; display: flex; justify-content: center; padding: 48px 24px; }
+    .wizard { max-width: 600px; width: 100%; background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 40px; }
+    .steps { display: flex; justify-content: space-between; margin-bottom: 40px; position: relative; }
+    .steps::before { content: ''; position: absolute; top: 14px; left: 40px; right: 40px; height: 2px; background: #334155; z-index: 0; }
+    .step { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+    .step-circle { width: 28px; height: 28px; border-radius: 50%; background: #334155; border: 2px solid #334155; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+    .step.active .step-circle { background: #2563eb; border-color: #2563eb; }
+    .step.completed .step-circle { background: #059669; border-color: #059669; }
+    .step-label { font-size: 10px; color: #64748b; text-align: center; }
+    .step.active .step-label { color: #60a5fa; font-weight: 500; }
+    
+    .content { min-height: 240px; }
+    .content h2 { font-size: 22px; margin-bottom: 8px; }
+    .content p { font-size: 14px; color: #94a3b8; margin-bottom: 24px; line-height: 1.6; }
+    .feature-list { list-style: none; }
+    .feature-list li { padding: 10px 0; border-bottom: 1px solid #334155; display: flex; align-items: center; gap: 12px; font-size: 14px; }
+    .feature-list li:last-child { border-bottom: none; }
+    .check { width: 20px; height: 20px; border-radius: 50%; background: #05966920; color: #34d399; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+    
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 32px; }
+    .btn { padding: 10px 24px; border-radius: 8px; border: none; font-weight: 600; font-size: 14px; cursor: pointer; }
+    .btn-primary { background: #2563eb; color: #fff; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-secondary { background: transparent; color: #94a3b8; border: 1px solid #334155; }
+    .btn-success { background: #059669; color: #fff; }
+    .color-select { display: flex; gap: 12px; margin: 16px 0; }
+    .color-option { width: 36px; height: 36px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: all 0.2s; }
+    .color-option.selected { border-color: #fff; transform: scale(1.15); }
+  </style>
+</head>
+<body>
+  <div class="wizard">
+    <div class="steps">
+      <div class="step active" id="step1">
+        <div class="step-circle">1</div>
+        <div class="step-label">Welcome</div>
+      </div>
+      <div class="step" id="step2">
+        <div class="step-circle">2</div>
+        <div class="step-label">Verify</div>
+      </div>
+      <div class="step" id="step3">
+        <div class="step-circle">3</div>
+        <div class="step-label">Color</div>
+      </div>
+      <div class="step" id="step4">
+        <div class="step-circle">4</div>
+        <div class="step-label">Team</div>
+      </div>
+      <div class="step" id="step5">
+        <div class="step-circle">5</div>
+        <div class="step-label">Done!</div>
+      </div>
+    </div>
+
+    <div class="content" id="stepContent">
+      <h2>Welcome to CostLens Legal 🚀</h2>
+      <p>You're joining a trusted network of verified law firms using AI-powered cost intelligence. Let's get you set up in 5 quick steps.</p>
+      <ul class="feature-list">
+        <li><span class="check">✓</span> AI-powered cost analysis and benchmarking</li>
+        <li><span class="check">✓</span> Early warning system for budget overruns</li>
+        <li><span class="check">✓</span> Industry-leading verification & compliance</li>
+        <li><span class="check">✓</span> Real-time profitability tracking by case type</li>
+      </ul>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+      <button class="btn btn-primary" onclick="nextStep()">Next Step →</button>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    const steps = [
+      { title: 'Welcome to CostLens Legal 🚀', desc: "You're joining a trusted network...", content: '<ul class="feature-list"><li><span class="check">✓</span> AI-powered cost analysis</li><li><span class="check">✓</span> Early warning system</li><li><span class="check">✓</span> Verification & compliance</li><li><span class="check">✓</span> Profitability tracking</li></ul>' },
+      { title: 'Verify Your Firm ✅', desc: 'We need to verify your identity and business registration. This takes about 2 minutes.', content: '<ul class="feature-list"><li><span class="check">✓</span> Upload government-issued ID</li><li><span class="check">✓</span> Business registration (EIN/SS)</li><li><span class="check">✓</span> Insurance certificate</li><li><span class="check">✓</span> Background check (partners)</li></ul><p style="margin-top:16px;font-size:13px;color:#f59e0b;">🔒 All documents encrypted and securely stored.</p>' },
+      { title: 'Choose Your Firm Color 🎨', desc: 'Pick a unique color for your firm. This will appear on dashboards, documents, and calendars to keep your firm organized.', content: '<div class="color-select"><div class="color-option selected" style="background:#3b82f6" onclick="selectColor(this)"></div><div class="color-option" style="background:#8b5cf6" onclick="selectColor(this)"></div><div class="color-option" style="background:#ec4899" onclick="selectColor(this)"></div><div class="color-option" style="background:#f59e0b" onclick="selectColor(this)"></div><div class="color-option" style="background:#10b981" onclick="selectColor(this)"></div><div class="color-option" style="background:#ef4444" onclick="selectColor(this)"></div><div class="color-option" style="background:#06b6d4" onclick="selectColor(this)"></div><div class="color-option" style="background:#84cc16" onclick="selectColor(this)"></div></div><p style="font-size:13px;color:#64748b;">This color is unique to your firm across the entire platform.</p>' },
+      { title: 'Invite Your Team 👥', desc: 'Add your attorneys and paralegals to the platform. Each will get a welcome email with setup instructions.', content: '<div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:16px;margin-bottom:12px;"><input style="width:100%;padding:8px;background:transparent;border:none;color:#fff;font-size:14px;outline:none;" placeholder="Enter email addresses, separated by commas" /></div><p style="font-size:13px;color:#64748b;">💡 Each team member will get role-based access. You can set permissions later.</p>' },
+      { title: "You're All Set! 🎉", desc: 'Your firm is now part of the CostLens Legal verified network. Your dashboard is ready.', content: '<div style="text-align:center;padding:20px;"><div style="font-size:64px;margin-bottom:16px;">🎉</div><p style="font-size:16px;color:#34d399;font-weight:600;">✓ Firm Verified</p><p style="font-size:13px;color:#64748b;margin-top:8px;">Your CostLens Verified badge is now active.</p><div style="margin-top:16px;display:inline-flex;align-items:center;gap:6px;background:#059669;padding:8px 20px;border-radius:100px;font-size:13px;font-weight:600;">✓ CostLens Verified</div></div>' }
+    ];
+
+    function renderStep() {
+      const data = steps[currentStep - 1];
+      document.getElementById('stepContent').innerHTML = `<h2>${data.title}</h2><p>${data.desc}</p>${data.content}`;
+      for (let i = 1; i <= 5; i++) {
+        const el = document.getElementById('step' + i);
+        el.classList.toggle('active', i === currentStep);
+        el.classList.toggle('completed', i < currentStep);
+      }
+    }
+    function nextStep() { if (currentStep < 5) { currentStep++; renderStep(); } }
+    function prevStep() { if (currentStep > 1) { currentStep--; renderStep(); } }
+    function selectColor(el) { document.querySelectorAll('.color-option').forEach(c => c.classList.remove('selected')); el.classList.add('selected'); }
+  </script>
+</body>
+</html>

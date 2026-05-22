@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CostLens Legal — Verification Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0f172a; color: #fff; padding: 24px; }
+    .dashboard { max-width: 1200px; margin: 0 auto; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+    .logo { font-size: 20px; font-weight: 700; }
+    .logo span { color: #60a5fa; }
+    .badge { background: #059669; color: #fff; padding: 4px 12px; border-radius: 100px; font-size: 12px; font-weight: 600; }
+    
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+    .stat-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; }
+    .stat-number { font-size: 28px; font-weight: 700; color: #60a5fa; }
+    .stat-label { font-size: 13px; color: #94a3b8; margin-top: 4px; }
+    .stat-sub { font-size: 11px; color: #64748b; margin-top: 2px; }
+    
+    .status-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 32px; }
+    
+    .pending-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; }
+    .pending-card h3 { font-size: 16px; margin-bottom: 16px; }
+    
+    .firm-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #1e293b; }
+    .firm-row:last-child { border-bottom: none; }
+    .firm-info { display: flex; align-items: center; gap: 12px; }
+    .color-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .firm-name { font-weight: 500; font-size: 14px; }
+    .firm-date { font-size: 12px; color: #64748b; }
+    .status-tag { font-size: 11px; padding: 2px 8px; border-radius: 100px; font-weight: 500; }
+    .tag-pending { background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b40; }
+    .tag-review { background: #3b82f620; color: #60a5fa; border: 1px solid #3b82f640; }
+    .tag-approved { background: #05966920; color: #34d399; border: 1px solid #05966940; }
+    .tag-flagged { background: #ef444420; color: #f87171; border: 1px solid #ef444440; }
+    
+    .actions { display: flex; gap: 8px; }
+    .btn { padding: 6px 14px; border-radius: 6px; border: none; font-size: 12px; font-weight: 500; cursor: pointer; }
+    .btn-approve { background: #059669; color: #fff; }
+    .btn-reject { background: #ef4444; color: #fff; }
+    .btn-review { background: #3b82f6; color: #fff; }
+    
+    .verified-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; }
+    .verified-card h3 { font-size: 16px; margin-bottom: 16px; }
+    .verified-firm { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #1e293b; font-size: 14px; }
+    .verified-firm:last-child { border-bottom: none; }
+    .verified-check { color: #34d399; font-weight: bold; }
+    
+    .badge-section { margin-bottom: 32px; }
+    .badge-section h3 { font-size: 16px; margin-bottom: 16px; }
+    .badge-showcase { display: flex; gap: 24px; }
+    .badge-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; text-align: center; width: 160px; }
+    .verified-badge { display: inline-flex; align-items: center; gap: 6px; background: #059669; color: #fff; padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+    .badge-card p { font-size: 12px; color: #94a3b8; }
+    .preview-badge { width: 120px; height: 36px; background: #059669; border-radius: 100px; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11px; font-weight: 600; color: #fff; margin: 0 auto 8px; }
+    
+    .recently-verified { margin-bottom: 32px; }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="header">
+      <div class="logo">◆ CostLens <span>Verification</span></div>
+      <span class="badge">● 5 Verified Firms</span>
+    </div>
+    
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-number">27</div>
+        <div class="stat-label">Pending Review</div>
+        <div class="stat-sub">Awaiting verification checks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Verified Firms</div>
+        <div class="stat-sub">Fully approved & badged</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Flagged</div>
+        <div class="stat-sub">Needs manual review</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">95%</div>
+        <div class="stat-label">Auto-Approval Rate</div>
+        <div class="stat-sub">Identity checks passed</div>
+      </div>
+    </div>
+
+    <div class="status-grid">
+      <div class="pending-card">
+        <h3>⏳ Pending Review Queue</h3>
+        <div class="firm-row">
+          <div class="firm-info">
+            <div class="color-dot" style="background:#6366f1"></div>
+            <div><div class="firm-name">Skadden, Arps</div><div class="firm-date">Submitted 2h ago</div></div>
+          </div>
+          <span class="status-tag tag-pending">Identity: ✅ Business: ⏳</span>
+          <div class="actions">
+            <button class="btn btn-review">Review</button>
+          </div>
+        </div>
+        <div class="firm-row">
+          <div class="firm-info">
+            <div class="color-dot" style="background:#f59e0b"></div>
+            <div><div class="firm-name">Jones Day</div><div class="firm-date">Submitted 5h ago</div></div>
+          </div>
+          <span class="status-tag tag-pending">Insurance: ⏳</span>
+          <div class="actions">
+            <button class="btn btn-review">Review</button>
+          </div>
+        </div>
+        <div class="firm-row">
+          <div class="firm-info">
+            <div class="color-dot" style="background:#ec4899"></div>
+            <div><div class="firm-name">DLA Piper</div><div class="firm-date">Submitted 1d ago</div></div>
+          </div>
+          <span class="status-tag tag-review">Background: In Progress</span>
+          <div class="actions">
+            <button class="btn btn-review">Review</button>
+          </div>
+        </div>
+        <div class="firm-row">
+          <div class="firm-info">
+            <div class="color-dot" style="background:#10b981"></div>
+            <div><div class="firm-name">Morgan Lewis</div><div class="firm-date">Submitted 1d ago</div></div>
+          </div>
+          <span class="status-tag tag-flagged">⚠️ Docs Expired</span>
+          <div class="actions">
+            <button class="btn btn-reject">Flag</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="verified-card">
+        <h3>✅ Recently Verified</h3>
+        <div class="verified-firm"><span class="verified-check">✓</span> <div class="color-dot" style="background:#3b82f6"></div> Kirkland & Ellis</div>
+        <div class="verified-firm"><span class="verified-check">✓</span> <div class="color-dot" style="background:#8b5cf6"></div> Latham & Watkins</div>
+        <div class="verified-firm"><span class="verified-check">✓</span> <div class="color-dot" style="background:#f97316"></div> Fox Rothschild</div>
+        <div class="verified-firm"><span class="verified-check">✓</span> <div class="color-dot" style="background:#06b6d4"></div> Gibson Dunn</div>
+        <div class="verified-firm"><span class="verified-check">✓</span> <div class="color-dot" style="background:#84cc16"></div> Quinn Emanuel</div>
+      </div>
+    </div>
+
+    <div class="badge-section">
+      <h3>🏆 Verification Badge Concepts</h3>
+      <div class="badge-showcase">
+        <div class="badge-card">
+          <div class="preview-badge">✓ CostLens Verified</div>
+          <p>Standard verification badge for approved firms</p>
+        </div>
+        <div class="badge-card" style="border-color:#f59e0b;">
+          <div class="preview-badge" style="background:#d97706;">★ Premium Verified</div>
+          <p>Premium tier with enhanced verification</p>
+        </div>
+        <div class="badge-card" style="border-color:#3b82f6;">
+          <div class="preview-badge" style="background:#2563eb;">◆ Enterprise Verified</div>
+          <p>Enterprise-grade compliance verification</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
